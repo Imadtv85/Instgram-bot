@@ -3,21 +3,21 @@ name: Instagram Chatbot
 on:
   push:
     branches:
-      - main  # يمكنك استبدالها بالفرع الذي تعمل عليه
-  workflow_dispatch:  # يسمح بتشغيله يدويًا من واجهة GitHub
+      - main  # يتم تشغيله عند الدفع إلى الفرع الرئيسي
+  workflow_dispatch:  # يتيح تشغيل الـ Action يدويًا عبر واجهة GitHub
 
 jobs:
   run-bot:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # يعمل على أحدث بيئة من Ubuntu
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2  # تحميل المستودع
 
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.8'  # يمكنك تعديل النسخة بحسب الحاجة
+          python-version: '3.8'  # تحديد نسخة Python
 
       - name: Install dependencies
         run: |
@@ -26,7 +26,7 @@ jobs:
 
       - name: Run Instagram Chatbot
         run: |
-          # كود البوت مباشرة داخل الـ YAML
+          # كتابة كود البوت داخل الـ YAML مباشرة
           echo "import requests
 import openai
 import json
