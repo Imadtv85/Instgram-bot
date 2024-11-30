@@ -26,10 +26,9 @@ jobs:
 
       - name: Run Instagram Chatbot
         run: |
-          # كتابة كود البوت داخل الـ YAML مباشرة
-          echo "import requests
+          python -c "
+import requests
 import openai
-import json
 import time
 
 # إعدادات OpenAI
@@ -97,4 +96,5 @@ def main():
         time.sleep(5)  # الانتظار 5 ثواني قبل التحقق من الرسائل الجديدة
 
 if __name__ == '__main__':
-    main()" > instagram_chatbot.py && python instagram_chatbot.py
+    main()
+          "
