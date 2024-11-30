@@ -3,16 +3,16 @@ name: Instagram Chatbot
 on:
   push:
     branches:
-      - main  # يتم تشغيله عند الدفع إلى الفرع الرئيسي
-  workflow_dispatch:  # يتيح تشغيل الـ Action يدويًا عبر واجهة GitHub
+      - main  # يعمل عند الدفع إلى الفرع الرئيسي
+  workflow_dispatch:  # يسمح بتشغيله يدويًا عبر GitHub
 
 jobs:
   run-bot:
-    runs-on: ubuntu-latest  # يعمل على أحدث بيئة من Ubuntu
+    runs-on: ubuntu-latest  # يعمل على أحدث نسخة من Ubuntu
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2  # تحميل المستودع
+        uses: actions/checkout@v2  # تنزيل المستودع
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -30,13 +30,14 @@ jobs:
 import requests
 import openai
 import time
+import os
 
-# إعدادات OpenAI
-openai.api_key = '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'
+# إعدادات OpenAI من GitHub Secrets
+openai.api_key = os.getenv('OPENAI_API_KEY')
 
-# إعدادات Instagram
-PAGE_ACCESS_TOKEN = 'EAANWqohOJlsBO6ZCUVlokCDvkZB1IwWpjrefcJpdHCou8ZAZALtO5c3VB1ZBKSaZCWZAgklUtRdav6ve6ULta6LrheCLNZB7z18iZANMDlv51HXvApmeQjx26ZApOrnh38Fgkk1zy1ZA8jJzbv65OnH4wlmvJBvcMb5nMMpccZC4ZAtebMuOqdel0OWqW6zZAqcajMwCkkwj7fXGhEJbmuKqIVgYiyshveyDEZD'
-INSTAGRAM_BUSINESS_ID = '1316744332839871'
+# إعدادات Instagram من GitHub Secrets
+PAGE_ACCESS_TOKEN = os.getenv('INSTAGRAM_ACCESS_TOKEN')
+INSTAGRAM_BUSINESS_ID = os.getenv('INSTAGRAM_BUSINESS_ID')
 
 def get_chatgpt_response(user_message):
     # استدعاء GPT-3 للحصول على رد على الرسالة
@@ -98,3 +99,7 @@ def main():
 if __name__ == '__main__':
     main()
           "
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+          INSTAGRAM_BUSINESS_ID: ${{ secrets.INSTAGRAM_BUSINESS_ID }}
