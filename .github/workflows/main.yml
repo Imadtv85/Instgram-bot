@@ -1,36 +1,33 @@
-name: Run Instagram Chatbot
+name: Instagram Chatbot
 
 on:
   push:
     branches:
-      - main
+      - main  # يمكنك استبدالها بالفرع الذي تعمل عليه
+  workflow_dispatch:  # يسمح بتشغيله يدويًا من واجهة GitHub
 
 jobs:
-  run-chatbot:
+  run-bot:
     runs-on: ubuntu-latest
 
     steps:
-      # الخطوة 1: سحب الكود من المستودع
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-      # الخطوة 2: إعداد Python
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.9
+          python-version: '3.8'  # يمكنك تعديل النسخة بحسب الحاجة
 
-      # الخطوة 3: تثبيت المتطلبات
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install openai requests
 
-      # الخطوة 4: تشغيل السكربت
-      - name: Run chatbot
+      - name: Run Instagram Chatbot
         env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
-          INSTAGRAM_BUSINESS_ID: ${{ secrets.INSTAGRAM_BUSINESS_ID }}
+          OPENAI_API_KEY: "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"
+          INSTAGRAM_ACCESS_TOKEN: "EAANWqohOJlsBO6ZCUVlokCDvkZB1IwWpjrefcJpdHCou8ZAZALtO5c3VB1ZBKSaZCWZAgklUtRdav6ve6ULta6LrheCLNZB7z18iZANMDlv51HXvApmeQjx26ZApOrnh38Fgkk1zy1ZA8jJzbv65OnH4wlmvJBvcMb5nMMpccZC4ZAtebMuOqdel0OWqW6zZAqcajMwCkkwj7fXGhEJbmuKqIVgYiyshveyDEZD"
+          INSTAGRAM_BUSINESS_ID: "1316744332839871"  # Instagram Business ID الخاص بك
         run: |
           python instagram_chatbot.py
